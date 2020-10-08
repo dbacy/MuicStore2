@@ -13,6 +13,7 @@ namespace MuicStore2.Data
             : base(options)
         {
         }
-        public DbSet<MuicStore2.Models.Music> Music { get; set; }
+        public DbSet<MuicStore2.Models.Song> Songs { get; set; }
+        public DbSet<MuicStore2.Models.Customer> Customers { get; set; }
     }
 }

@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace MuicStore2.Controllers
 {
-    public class MusicsController : Controller
+    public class SongsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
 
-        public MusicsController(ApplicationDbContext context, IWebHostEnvironment env)
+        public SongsController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
             _env = env;
@@ -27,7 +27,7 @@ namespace MuicStore2.Controllers
         // GET: Musics
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Music.ToListAsync());
+            return View(await _context.Songs.ToListAsync());
         }
 
         // GET: Musics/Details/5
@@ -38,7 +38,7 @@ namespace MuicStore2.Controllers
                 return NotFound();
             }
 
-            var music = await _context.Music
+            var music = await _context.Songs
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (music == null)
             {
@@ -59,7 +59,7 @@ namespace MuicStore2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,YearReleased,Artist,Album,Feature,FeaturedArtist,Genre,ImagePath,Price")] Music music, IFormFile file)
+        public async Task<IActionResult> Create([Bind("Id,Name,YearReleased,Artist,Album,Feature,FeaturedArtist,Genre,ImagePath,Price,IsActive")] Song music, IFormFile file)
         {
             if (file != null)
             {
@@ -88,7 +88,7 @@ namespace MuicStore2.Controllers
                 return NotFound();
             }
 
-            var music = await _context.Music.FindAsync(id);
+            var music = await _context.Songs.FindAsync(id);
             if (music == null)
             {
                 return NotFound();
@@ -101,7 +101,7 @@ namespace MuicStore2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,YearReleased,Artist,Album,Feature,FeaturedArtist,Genre,ImagePath,Price")] Music music, IFormFile file)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,YearReleased,Artist,Album,Feature,FeaturedArtist,Genre,ImagePath,Price,IsActive")] Song music, IFormFile file)
         {
             if (file != null)
             {
@@ -149,7 +149,7 @@ namespace MuicStore2.Controllers
                 return NotFound();
             }
 
-            var music = await _context.Music
+            var music = await _context.Songs
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (music == null)
             {
@@ -164,15 +164,15 @@ namespace MuicStore2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var music = await _context.Music.FindAsync(id);
-            _context.Music.Remove(music);
+            var music = await _context.Songs.FindAsync(id);
+            _context.Songs.Remove(music);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MusicExists(int id)
         {
-            return _context.Music.Any(e => e.Id == id);
+            return _context.Songs.Any(e => e.Id == id);
         }
     }
 }

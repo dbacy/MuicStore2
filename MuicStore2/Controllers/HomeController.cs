@@ -15,7 +15,7 @@ namespace MuicStore2.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         
-
+        
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
